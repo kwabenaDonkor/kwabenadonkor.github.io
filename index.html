@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Faculty site — three directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@400;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --asphalt:#1A1C20;
+    --ink:#2E3138;
+    --muted:#767B85;
+    --concrete:#E8E8E4;
+    --medallion:#F2B01E;
+    --boro:#6FB447;
+    --hair:rgba(46,49,56,.16);
+    --display:"Saira Condensed",Arial Narrow,sans-serif;
+    --body:"Source Serif 4",Georgia,serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--concrete);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+
+  /* ---- mockup chrome (not part of the design) ---- */
+  .chrome{position:sticky;top:0;z-index:50;background:var(--asphalt);color:#fff;
+    display:flex;gap:1px;align-items:stretch;font-family:var(--mono);font-size:11px;letter-spacing:.06em}
+  .chrome span{padding:11px 14px;opacity:.55;text-transform:uppercase}
+  .chrome a{padding:11px 14px;text-decoration:none;opacity:.75;border-left:1px solid rgba(255,255,255,.14)}
+  .chrome a:hover,.chrome a:focus-visible{opacity:1;background:rgba(255,255,255,.09)}
+  .tag{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--muted);border:1px solid var(--hair);
+    padding:3px 7px;border-radius:2px}
+  .divider{background:var(--asphalt);color:#fff;padding:28px 6vw;font-family:var(--mono);
+    font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+  .divider b{color:var(--medallion);font-weight:500}
+  .note{max-width:62ch;font-size:13px;line-height:1.6;color:rgba(255,255,255,.62);
+    margin:10px 0 0;font-family:var(--body);letter-spacing:0;text-transform:none}
+
+  /* =========== DIRECTION A — the checker heatmap =========== */
+  .a-wrap{background:var(--asphalt);color:#fff;padding:0 0 90px}
+  .a-top{padding:60px 6vw 0;display:flex;justify-content:space-between;
+    align-items:baseline;gap:24px;flex-wrap:wrap}
+  .a-name{font-family:var(--display);font-weight:700;font-size:clamp(38px,7vw,86px);
+    line-height:.92;letter-spacing:-.01em;text-transform:uppercase;margin:0}
+  .a-name em{font-style:normal;color:var(--medallion)}
+  .a-role{font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;color:rgba(255,255,255,.5);text-align:right;line-height:1.9}
+
+  .a-band{margin:46px 0 0;padding:0 6vw}
+  .a-grid{display:grid;grid-template-columns:repeat(24,1fr);gap:2px;width:100%}
+  .cell{aspect-ratio:1;background:rgba(255,255,255,.045);border-radius:1px;
+    transition:background .55s ease, transform .18s ease}
+  .cell.on{transform:none}
+  .a-axis{display:flex;justify-content:space-between;margin-top:9px;
+    font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.38);letter-spacing:.08em}
+  .a-legend{display:flex;align-items:center;gap:18px;margin-top:22px;flex-wrap:wrap}
+  .a-cap{font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.45);
+    letter-spacing:.05em;max-width:48ch;line-height:1.7}
+  .swap{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    background:none;color:#fff;border:1px solid rgba(255,255,255,.28);padding:8px 14px;
+    border-radius:2px;cursor:pointer;transition:.2s}
+  .swap:hover,.swap:focus-visible{border-color:var(--medallion);color:var(--medallion)}
+  .swap .dot{display:inline-block;width:8px;height:8px;border-radius:50%;
+    background:var(--medallion);margin-right:8px;vertical-align:middle}
+
+  .a-lede{padding:64px 6vw 0;max-width:70ch;font-size:19px;line-height:1.62;
+    color:rgba(255,255,255,.82)}
+  .a-lede strong{color:#fff;font-weight:600}
+  .a-papers{padding:56px 6vw 0}
+  .a-h{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--medallion);margin:0 0 22px}
+  .paper{display:grid;grid-template-columns:76px 1fr;gap:22px;padding:20px 0;
+    border-top:1px solid rgba(255,255,255,.13)}
+  .paper:last-child{border-bottom:1px solid rgba(255,255,255,.13)}
+  .paper .yr{font-family:var(--mono);font-size:12px;color:rgba(255,255,255,.42);padding-top:4px}
+  .paper h3{margin:0 0 5px;font-size:19px;font-weight:600;line-height:1.35}
+  .paper p{margin:0;font-size:14px;color:rgba(255,255,255,.5);font-family:var(--mono)}
+
+  /* =========== DIRECTION B — photograph hero =========== */
+  .b-wrap{background:#fff}
+  .b-hero{position:relative;height:min(74vh,620px);overflow:hidden;background:var(--asphalt)}
+  .b-photo{position:absolute;inset:0;
+    background:
+      radial-gradient(120% 90% at 22% 18%, rgba(242,176,30,.42), transparent 58%),
+      radial-gradient(90% 80% at 82% 76%, rgba(111,180,71,.20), transparent 62%),
+      linear-gradient(168deg,#23262C 0%,#14161A 62%,#0D0E11 100%);
+  }
+  .b-photo::after{content:"";position:absolute;inset:0;
+    background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.045) 0 1px,transparent 1px 74px),
+      repeating-linear-gradient(0deg,rgba(255,255,255,.03) 0 1px,transparent 1px 74px)}
+  .b-slot{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    color:rgba(255,255,255,.34);text-align:center;padding:0 8vw;line-height:2.2}
+  .b-over{position:absolute;left:0;right:0;bottom:0;padding:0 6vw 42px;
+    background:linear-gradient(transparent,rgba(10,11,13,.86) 62%)}
+  .b-over h1{font-family:var(--display);font-weight:600;text-transform:uppercase;
+    font-size:clamp(32px,5.4vw,62px);line-height:1;margin:0;color:#fff;letter-spacing:-.005em}
+  .b-over p{margin:12px 0 0;color:rgba(255,255,255,.72);font-size:16px;max-width:52ch}
+  .b-credit{position:absolute;right:6vw;top:24px;font-family:var(--mono);font-size:10px;
+    letter-spacing:.1em;color:rgba(255,255,255,.4);text-transform:uppercase}
+  .b-body{padding:56px 6vw 76px;display:grid;grid-template-columns:1.35fr 1fr;gap:56px}
+  .b-body p{margin:0 0 16px;font-size:17px;line-height:1.65}
+  .b-side h4{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--muted);margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid var(--hair)}
+  .b-side ul{list-style:none;margin:0 0 30px;padding:0}
+  .b-side li{padding:7px 0;font-size:15px;border-bottom:1px solid var(--hair)}
+  @media(max-width:760px){.b-body{grid-template-columns:1fr;gap:36px}}
+
+  /* =========== DIRECTION C — papers first =========== */
+  .c-wrap{background:#FCFCFB;padding:76px 6vw 90px}
+  .c-head{display:grid;grid-template-columns:1fr 240px;gap:48px;
+    padding-bottom:30px;border-bottom:2px solid var(--asphalt)}
+  .c-head h1{font-family:var(--display);font-size:clamp(30px,4.4vw,50px);font-weight:600;
+    text-transform:uppercase;margin:0 0 10px;line-height:1}
+  .c-head p{margin:0;font-size:17px;line-height:1.6;max-width:56ch;color:var(--ink)}
+  .c-meta{font-family:var(--mono);font-size:12px;line-height:2;color:var(--muted)}
+  .c-meta a{color:var(--ink)}
+  .c-sec{margin-top:44px}
+  .c-sec h2{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);margin:0 0 6px;font-weight:400}
+  .c-item{padding:18px 0;border-bottom:1px solid var(--hair);display:grid;
+    grid-template-columns:1fr auto;gap:20px;align-items:baseline}
+  .c-item h3{margin:0 0 4px;font-size:18px;font-weight:600;line-height:1.35}
+  .c-item .sub{font-size:14px;color:var(--muted);font-style:italic}
+  .c-item .links{font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+    text-transform:uppercase;white-space:nowrap;color:var(--muted)}
+  .c-item .links a{text-decoration:none;border-bottom:1px solid var(--medallion);padding-bottom:1px}
+  .c-rule{height:14px;margin-top:52px;
+    background-image:linear-gradient(45deg,var(--asphalt) 25%,transparent 25%,transparent 75%,var(--asphalt) 75%),
+      linear-gradient(45deg,var(--asphalt) 25%,transparent 25%,transparent 75%,var(--asphalt) 75%);
+    background-size:14px 14px;background-position:0 0,7px 7px;opacity:.9}
+  @media(max-width:760px){.c-head{grid-template-columns:1fr;gap:24px}
+    .c-item{grid-template-columns:1fr}}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<nav class="chrome">
+  <span>3 directions</span>
+  <a href="#a">A · Data hero</a>
+  <a href="#b">B · Photo hero</a>
+  <a href="#c">C · Papers first</a>
+</nav>
+
+<div class="divider" id="a">
+  Direction A — <b>the checker band is the data</b>
+  <p class="note">The Checker-cab stripe rebuilt as a 24-hour × 7-day pickup heatmap. It reads as decoration from across the room and as a finding up close. Toggle switches between yellow medallion and green boro fleets — a real distinction in the TLC records, and the kind of thing only someone who works with this data would put on a homepage. Values below are illustrative, not real.</p>
+</div>
+
+<section class="a-wrap">
+  <div class="a-top">
+    <h1 class="a-name">First<br><em>Last</em></h1>
+    <div class="a-role">Assistant Professor of Economics<br>Stanford University<br>Urban · Labor · Applied micro</div>
+  </div>
+
+  <div class="a-band">
+    <div class="a-grid" id="grid" aria-hidden="true"></div>
+    <div class="a-axis"><span>12A</span><span>6A</span><span>NOON</span><span>6P</span><span>11P</span></div>
+    <div class="a-legend">
+      <button class="swap" id="swap" type="button"><span class="dot" id="dot"></span><span id="swaplabel">Yellow medallion</span></button>
+      <p class="a-cap">Pickups by hour and weekday. Rows run Monday at top to Sunday at bottom.</p>
+    </div>
+  </div>
+
+  <p class="a-lede">I study how cities allocate scarce street space, using <strong>1.4 billion recorded taxi trips</strong> as a laboratory for questions about labor supply, congestion pricing, and the distribution of urban access.</p>
+
+  <div class="a-papers">
+    <h2 class="a-h">Working papers</h2>
+    <div class="paper"><div class="yr">2026</div><div><h3>Placeholder title one</h3><p>with Coauthor · R&amp;R, American Economic Review</p></div></div>
+    <div class="paper"><div class="yr">2025</div><div><h3>Placeholder title two</h3><p>NBER Working Paper</p></div></div>
+    <div class="paper"><div class="yr">2024</div><div><h3>Placeholder title three</h3><p>with Coauthor and Coauthor</p></div></div>
+  </div>
+</section>
+
+<div class="divider" id="b">
+  Direction B — <b>photograph carries it</b>
+  <p class="note">Full-bleed image, name and one sentence over the bottom gradient, everything else quiet underneath. The grey block is where a licensed photograph goes — I've left it empty rather than dropping in a stock cab, because this layout lives or dies on the picture being genuinely good. Weideman or Rodríguez pricing is worth checking before committing to this one.</p>
+</div>
+
+<section class="b-wrap">
+  <div class="b-hero">
+    <div class="b-photo"></div>
+    <div class="b-slot">Photograph goes here<br>full-bleed · 2400px wide minimum · dark enough at the base for white type</div>
+    <div class="b-credit">© Photographer / licensed</div>
+    <div class="b-over">
+      <h1>First Last</h1>
+      <p>Assistant Professor of Economics at Stanford. I work on cities, labor, and the economics of getting from one place to another.</p>
+    </div>
+  </div>
+  <div class="b-body">
+    <div>
+      <p>Two or three paragraphs of plain biography here — what he works on, where the data comes from, why anyone outside the field should care. This is the part journalists copy.</p>
+      <p>Keep it under 200 words. Everything longer belongs in the CV.</p>
+    </div>
+    <div class="b-side">
+      <h4>Recent</h4>
+      <ul><li>Placeholder paper title</li><li>Placeholder paper title</li><li>Placeholder paper title</li></ul>
+      <h4>Elsewhere</h4>
+      <ul><li>CV (PDF)</li><li>Google Scholar</li><li>Email</li></ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider" id="c">
+  Direction C — <b>no imagery at all</b>
+  <p class="note">The austere version, done properly. Name, one sentence, then papers. Nothing above the fold but text. This is what most senior econ faculty actually run, it never looks dated, and it takes an afternoon to build. The only ornament is a single checker rule at the bottom.</p>
+</div>
+
+<section class="c-wrap">
+  <div class="c-head">
+    <div>
+      <h1>First Last</h1>
+      <p>Assistant Professor of Economics, Stanford University. Urban economics, labor, and transportation. My current work uses New York City taxi records to study how street space is priced and who gets to use it.</p>
+    </div>
+    <div class="c-meta">
+      Landau Economics Building<br>579 Jane Stanford Way<br>Stanford, CA 94305<br><br>
+      <a href="#">first@stanford.edu</a><br><a href="#">CV (PDF)</a><br><a href="#">Google Scholar</a>
+    </div>
+  </div>
+
+  <div class="c-sec">
+    <h2>Working papers</h2>
+    <div class="c-item"><div><h3>Placeholder title one</h3><div class="sub">with Coauthor · revise and resubmit, American Economic Review</div></div><div class="links"><a href="#">PDF</a></div></div>
+    <div class="c-item"><div><h3>Placeholder title two</h3><div class="sub">NBER Working Paper No. 00000</div></div><div class="links"><a href="#">PDF</a> · <a href="#">Data</a></div></div>
+  </div>
+
+  <div class="c-sec">
+    <h2>Published</h2>
+    <div class="c-item"><div><h3>Placeholder title three</h3><div class="sub">Journal of Urban Economics, 2025</div></div><div class="links"><a href="#">PDF</a></div></div>
+    <div class="c-item"><div><h3>Placeholder title four</h3><div class="sub">AEJ: Applied, 2024</div></div><div class="links"><a href="#">PDF</a></div></div>
+  </div>
+
+  <div class="c-rule"></div>
+</section>
+
+<script>
+(function(){
+  var HOURS=24, DAYS=7, grid=document.getElementById('grid'), cells=[];
+  // illustrative rhythm: weekday commute peaks, weekend late nights
+  function val(d,h){
+    var weekend = d>=5, v=.10;
+    if(!weekend){ if(h>=7&&h<=9) v=.92; else if(h>=17&&h<=19) v=.98;
+      else if(h>=10&&h<=16) v=.52; else if(h>=20&&h<=22) v=.44; else v=.12; }
+    else { if(h>=0&&h<=3) v=.86; else if(h>=12&&h<=18) v=.58;
+      else if(h>=19&&h<=23) v=.80; else v=.14; }
+    if(d===4&&h>=21) v=.95;
+    return Math.max(0,Math.min(1, v + (((d*31+h*17)%11)-5)/70));
+  }
+  for(var d=0; d<DAYS; d++) for(var h=0; h<HOURS; h++){
+    var c=document.createElement('div'); c.className='cell';
+    c.dataset.v=val(d,h).toFixed(3); grid.appendChild(c); cells.push(c);
+  }
+  var hue='medallion';
+  function paint(instant){
+    var rgb = hue==='medallion' ? '242,176,30' : '111,180,71';
+    cells.forEach(function(c,i){
+      var v=parseFloat(c.dataset.v), a=(0.045+v*0.95).toFixed(3);
+      var go=function(){ c.style.background='rgba('+rgb+','+a+')'; };
+      instant ? go() : setTimeout(go, i*3);
+    });
+  }
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  paint(reduce);
+  document.getElementById('swap').addEventListener('click',function(){
+    hue = hue==='medallion' ? 'boro' : 'medallion';
+    document.getElementById('dot').style.background = hue==='medallion' ? '#F2B01E' : '#6FB447';
+    document.getElementById('swaplabel').textContent = hue==='medallion' ? 'Yellow medallion' : 'Boro green';
+    paint(true);
+  });
+})();
+</script>
+</body>
+</html>
