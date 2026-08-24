@@ -36,13 +36,16 @@
   .wrap{max-width:1180px;margin:0 auto;padding:0 6vw}
 
   /* ---- header / name ---- */
-  .top{padding:64px 0 0;display:flex;justify-content:space-between;
-    align-items:baseline;gap:24px;flex-wrap:wrap}
+  .top{padding:64px 0 0;display:flex;justify-content:flex-start;
+    align-items:flex-start;gap:40px;flex-wrap:wrap}
+  .id{flex:1 1 420px}
+  .portrait{width:150px;height:188px;flex:none;object-fit:cover;object-position:50% 26%;
+    border:1px solid var(--hair);border-radius:2px;display:block;margin-left:auto}
   .name{font-family:var(--display);font-weight:700;font-size:clamp(44px,7vw,92px);
     line-height:.92;letter-spacing:-.01em;text-transform:uppercase;margin:0;color:var(--ink)}
   .name em{font-style:normal;color:var(--medallion-ink)}
   .role{font-family:var(--mono);font-size:11px;letter-spacing:.12em;
-    text-transform:uppercase;color:var(--muted);text-align:right;line-height:1.9}
+    text-transform:uppercase;color:var(--muted);text-align:left;line-height:1.9;margin-top:18px}
 
   /* ---- site nav ---- */
   .nav{margin-top:28px;display:flex;gap:26px;flex-wrap:wrap;
@@ -79,20 +82,27 @@
     color:var(--medallion-ink);margin:0 0 20px}
   .paper{display:grid;grid-template-columns:76px 1fr auto;gap:22px;padding:20px 0;
     border-top:1px solid var(--hair);align-items:start}
-  /* icon slot (working papers + publications) */
-  .has-icons .paper{grid-template-columns:64px 76px 1fr auto}
-  .icon{width:64px;height:64px;border-radius:2px;background:rgba(46,49,56,.06);
-    border:1px solid var(--hair-soft);overflow:hidden;display:flex;align-items:center;justify-content:center}
-  .icon img{width:100%;height:100%;object-fit:cover;display:block}
-  .icon:empty::after{content:"";width:22px;height:28px;border:1.5px solid rgba(46,49,56,.22);
-    border-radius:2px;background:linear-gradient(rgba(46,49,56,.22) 0 0) 50% 40%/12px 1.5px no-repeat,
-    linear-gradient(rgba(46,49,56,.22) 0 0) 50% 58%/12px 1.5px no-repeat}
   .paper:last-child{border-bottom:1px solid var(--hair)}
   .paper .yr{font-family:var(--mono);font-size:12px;color:var(--faint);padding-top:5px}
   .paper h3{margin:0 0 5px;font-size:19px;font-weight:600;line-height:1.35;color:var(--ink)}
   .paper h3 a{text-decoration:none}
   .paper h3 a:hover{text-decoration:underline;text-underline-offset:3px}
   .paper p{margin:0;font-size:13px;color:var(--muted);font-family:var(--mono);line-height:1.6}
+  .disc{display:flex;flex-wrap:wrap;gap:0 24px;margin-top:12px}
+  .abs{margin-top:0}
+  .bib{font-family:var(--mono);font-size:12px;line-height:1.75;white-space:pre-wrap;
+    margin:14px 0 4px;border-left:1px solid var(--hair);padding-left:18px;color:var(--body-ink)}
+  .abs summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:9px;
+    font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted);border-bottom:1px solid var(--hair);padding-bottom:3px}
+  .abs summary::-webkit-details-marker{display:none}
+  .abs summary::before{content:"";width:7px;height:7px;border-right:1.5px solid var(--medallion-ink);
+    border-bottom:1.5px solid var(--medallion-ink);transform:rotate(45deg) translate(-2px,-2px);
+    transition:transform .2s ease}
+  .abs[open] summary::before{transform:rotate(-135deg) translate(-1px,-1px)}
+  .abs summary:hover,.abs summary:focus-visible{color:var(--medallion-ink);border-bottom-color:var(--medallion-ink)}
+  .abs .body{margin:14px 0 4px;font-family:var(--body);font-size:12px;text-align:justify;line-height:1.65;
+    color:var(--body-ink);border-left:1px solid var(--hair);padding-left:18px}
   .links{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
     display:flex;gap:14px;padding-top:6px;white-space:nowrap}
   .links a{text-decoration:none;color:var(--muted);border-bottom:1px solid var(--hair)}
@@ -110,14 +120,10 @@
     text-transform:uppercase;color:var(--faint)}
 
   @media (max-width:640px){
-    .top{flex-direction:column;align-items:flex-start}
-    .role{text-align:left}
+    .top{flex-direction:column-reverse;align-items:flex-start;gap:24px}
+    .portrait{width:104px;height:130px;margin-left:0}
     .paper{grid-template-columns:56px 1fr}
     .links{grid-column:2;padding-top:0}
-    .has-icons .paper{grid-template-columns:48px 1fr;gap:14px 16px}
-    .has-icons .icon{width:48px;height:48px;grid-row:span 3}
-    .has-icons .yr{padding-top:0}
-    .has-icons .links{grid-column:2}
     .contact{grid-template-columns:1fr}
     .lede{font-size:18px}
   }
@@ -128,12 +134,15 @@
 
 <header class="wrap">
   <div class="top">
-    <h1 class="name">Kwabena<br><em>Donkor</em></h1>
-    <div class="role">Assistant Professor of Marketing<br>Stanford Graduate School of Business<br>Behavioral · Marketing · IO · Labor</div>
+    <div class="id">
+      <h1 class="name">Kwabena<br><em>Donkor</em></h1>
+      <div class="role">Assistant Professor of Marketing<br>Stanford Graduate School of Business<br>Behavioral Economics · Marketing · IO · Labor</div>
+    </div>
+    <img class="portrait" src="headshot.png" alt="Kwabena Donkor" width="150" height="188">
   </div>
   <nav class="nav" aria-label="Site">
     <a href="#research">Research</a>
-    <a href="#media">Media</a>
+    <a href="media.html">Media</a>
     <a href="#contact">Contact</a>
     <a href="https://www.dropbox.com/scl/fi/b9bcmle95r36dozjpue64/CV_KwabenaDonkor.pdf?rlkey=7lzzvt24t1250yk3hi1xp7ozy&amp;dl=0">CV</a>
   </nav>
@@ -144,92 +153,75 @@
     <div class="grid" id="grid" aria-hidden="true"></div>
     <div class="axis"><span>12A</span><span>6A</span><span>NOON</span><span>6P</span><span>11P</span></div>
     <div class="legend">
-      <button class="swap" id="swap" type="button" aria-pressed="false"><span class="dot" id="dot"></span><span id="swaplabel">Yellow medallion</span></button>
-      <p class="cap">NYC taxi pickups by hour and weekday. Rows run Monday at top to Sunday at bottom. Values are illustrative.</p>
     </div>
   </div>
 
   <div class="lede">
-    <p>I study the economics of <strong>social learning, choice architecture, and discrimination</strong>. My work draws on behavioral economics, marketing, industrial organization, and labor economics, and often on the millions of decisions recorded in New York City&rsquo;s taxi market.</p>
+    <p>I study the economics of choice architecture, identity, discrimination and social learning.</p>
+    <p>My work draws on behavioral economics, marketing, industrial organization, and labor economics, and assessing the millions of decisions recorded in New York City&rsquo;s taxi market, sports betting and health insurance.</p>
   </div>
 
-  <section class="papers has-icons" id="research">
+  <section class="papers" id="research">
     <h2 class="h">Working papers</h2>
     <div class="paper">
-      <div class="icon"></div>
       <div class="yr">2026</div>
-      <div><h3><a href="https://www.dropbox.com/scl/fi/cn4pyiy09g30b1bvapia0/misreadingTheCrowd_KD.pdf?rlkey=kpm6sklvpdbyemrs9w7bs7xqw&amp;st=3omss8nx&amp;dl=0">Misreading the Crowd: The Composition Externality of Inference</a></h3><p>QME 2026</p></div>
+      <div><h3><a href="https://www.dropbox.com/scl/fi/cn4pyiy09g30b1bvapia0/misreadingTheCrowd_KD.pdf?rlkey=kpm6sklvpdbyemrs9w7bs7xqw&amp;st=3omss8nx&amp;dl=0">Misreading the Crowd: The Composition Externality of Inference</a></h3><p>QME 2026</p><div class="disc"><details class="abs"><summary>Abstract</summary><p class="body">When market conditions change quickly, individuals and firms learn from others, using cues such as queue lengths, bestseller lists, usage counts, or the number of active sellers to guide their decisions. Because these aggregate signals are generated by others&rsquo; decisions, their informational value depends on how those individuals interpret and respond to market conditions. We study how this feedback shapes market outcomes using 5.7 million decisions by 49,578 New York City taxi drivers at LaGuardia Airport, where passenger demand varies over time and is largely unobserved by drivers. After dropping off a passenger, a driver decides whether to wait in the taxi queue or search for fares elsewhere. Queue length is a driver&rsquo;s main public signal of airport demand, but it is produced by the decisions of preceding drivers. We use these decisions to classify drivers by their inference rules: sophisticated drivers infer underlying demand from the queue, while roughly 23 percent behave naively, interpreting queue length without accounting for demand. We show that a greater share of naive drivers at the airport lengthens queues when demand is low, shortens them when demand is high, reduces the queue&rsquo;s informational value, and raises the cost of joining for subsequent drivers. In counterfactuals, an information policy that corrects naive beliefs raises those drivers&rsquo; entry into the taxi lot and lowers driver welfare by about 17 percent. In contrast, a uniform entry fee raises driver welfare at every lot capacity we examine and frees roughly 78,000 driver-hours per year, worth about $1.8 million. More broadly, better information need not improve welfare when market signals are endogenous, participants interpret them differently, and access is capacity constrained.</p></details><details class="abs"><summary>BibTeX</summary><pre class="bib">@unpublished{donkor2026misreading,
+  author = {Donkor, Kwabena},
+  title  = {Misreading the Crowd: The Composition Externality of Inference},
+  year   = {2026},
+  note   = {Working paper, Stanford Graduate School of Business}
+}</pre></details></div></div>
       <div class="links"><a href="https://www.dropbox.com/scl/fi/cn4pyiy09g30b1bvapia0/misreadingTheCrowd_KD.pdf?rlkey=kpm6sklvpdbyemrs9w7bs7xqw&amp;st=3omss8nx&amp;dl=0">PDF</a></div>
     </div>
     <div class="paper">
-      <div class="icon"></div>
-      <div class="yr">2026</div>
-      <div><h3><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7156438">Leveling Down: Competition and Discrimination in Service Markets</a></h3><p>NBER Summer Institute (Labor Studies) 2026 · Marketing Science 2026 · WEAI 2025</p></div>
+      <div class="yr">2025</div>
+      <div><h3><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7156438">Leveling Down: Competition and Discrimination in Service Markets</a></h3><p>NBER Summer Institute (Labor Studies) 2026 · Marketing Science 2026 · WEAI 2025</p><div class="disc"><details class="abs"><summary>Abstract</summary><p class="body">Does competition reduce discrimination? Yes. The standard mechanism is selection, which drives discriminators from the market. But I identify a less benign channel, leveling down: competition narrows disparities by degrading service for everyone, with the largest degradation for those previously treated best. I model discrimination as in-group favoritism rather than out-group hostility. Providers favor same-group customers, but the favoritism requires surplus that competition erodes. Preferential treatment is a luxury good. In the New York City taxi market, airport queues randomly assign passengers to drivers, so discrimination shows up in how a passenger is served, not in whether the driver takes the fare. Before new competitors entered in 2013, drivers charged higher fares and took longer routes for passengers whose race differed from the driver&rsquo;s. Competition compressed these disparities by half to two-thirds through leveling down. The narrowing carries the model&rsquo;s signature: the same gap had ignored every within-shift earnings shortfall, and it fell most among the drivers least able to fund the favor. Market-wide, the cost of degraded service exceeded the benefit of reduced discrimination by nearly three to one.</p></details><details class="abs"><summary>BibTeX</summary><pre class="bib">@unpublished{donkor2025leveling,
+  author = {Donkor, Kwabena},
+  title  = {Leveling Down: Competition and Discrimination in Service Markets},
+  year   = {2025},
+  note   = {Working paper},
+  doi    = {10.2139/ssrn.7156438}
+}</pre></details></div></div>
       <div class="links"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7156438">SSRN</a></div>
     </div>
     <div class="paper">
-      <div class="icon"></div>
       <div class="yr">2023</div>
-      <div><h3><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4670092">The Price of Identity: Overoptimism and Congruence Concerns</a></h3><p>with Eugen Dimant, Lorenz G&ouml;tte, Michael Kurschilgen, and Maximilian M&uuml;ller</p></div>
+      <div><h3><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4670092">The Price of Identity: Overoptimism and Congruence Concerns</a></h3><p>with Eugen Dimant, Lorenz G&ouml;tte, Michael Kurschilgen, and Maximilian M&uuml;ller</p><div class="disc"><details class="abs"><summary>Abstract</summary><p class="body">We study how social identity distorts both beliefs and preferences in investment decision-making. We ran framed field experiments in online sports betting with Kenyan and UK soccer fans during the 2021/22 Premier League season, eliciting subjective probabilities and incentivized bets on matches that sometimes involve a participant&rsquo;s supported team and sometimes do not. Supporters overestimate their team&rsquo;s win probability by 10&ndash;18 percent relative to neutral bettors and allocate about 20 percent more of their budget to bets on their own team than to otherwise similar matches where they are neutral. Embedding these data in a portfolio-choice model, we separate the role of distorted beliefs from that of identity-driven preferences. Distorted beliefs explain 30&ndash;44 percent of the excess investment in favored teams, while the remaining 56&ndash;70 percent reflects an aversion to profiting when one&rsquo;s team loses, equivalent to valuing payoffs from such outcomes by 17&ndash;27 percent less. Exploiting variation in both recent and season-long performance, we show that this preference to avoid &ldquo;disloyal&rdquo; gains is stronger when teams perform poorly. Using the estimated model, we calculate welfare losses from identity-driven distortions of roughly 0.5&ndash;2.7 percent of betting budgets, with the exact magnitude depending on whether identity preferences are seen as welfare-relevant or as mistakes.</p></details><details class="abs"><summary>BibTeX</summary><pre class="bib">@unpublished{donkor2023price,
+  author = {Donkor, Kwabena and Goette, Lorenz and M\"uller, Maximilian W. and Dimant, Eugen and Kurschilgen, Michael J.},
+  title  = {The Price of Identity: Overoptimism and Congruence Concerns},
+  year   = {2023},
+  note   = {Working paper},
+  doi    = {10.2139/ssrn.4670092}
+}</pre></details></div></div>
       <div class="links"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4670092">SSRN</a></div>
     </div>
   </section>
 
-  <section class="papers has-icons">
+  <section class="papers">
     <h2 class="h">Publications</h2>
     <div class="paper">
-      <div class="icon"></div>
       <div class="yr">2026</div>
-      <div><h3><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3955553">Defaults and Decisions: Choice Architecture and Consumer Opt-Out</a></h3><p>Management Science · Coverage: Forbes, WSJ, Stanford Insights, Marginal Revolution</p></div>
+      <div><h3><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3955553">Defaults and Decisions: Choice Architecture and Consumer Opt-Out</a></h3><p>Management Science · Coverage: Forbes, WSJ, Stanford Insights, Marginal Revolution</p><div class="disc"><details class="abs"><summary>Abstract</summary><p class="body">Why do defaults stick? This paper estimates a structural model that disentangles two frictions underlying default adherence: a deviation cost (disutility when the chosen option differs from the consumer&rsquo;s ideal) and an opt-out cost (effort to override the default). I estimate the model on 8.6 million tipping decisions from NYC Yellow Taxi trips. A stated-preference survey identifies consumer preferences independently of defaults. The central finding is friction complementarity: 84% of default adherence arises from the interaction of both frictions, not from either alone. Deviation costs are small when consumer preferences are near a default, so even a modest opt-out cost sustains adherence. Structural parameters are stable when default options change, ruling out preference anchoring. A single lower default captures 69% of the maximum consumer welfare gain. Tip revenue falls 5.4%.</p></details><details class="abs"><summary>BibTeX</summary><pre class="bib">@article{donkor2026defaults,
+  author  = {Donkor, Kwabena},
+  title   = {Defaults and Decisions: Choice Architecture and Consumer Opt-Out},
+  journal = {Management Science},
+  year    = {2026}
+}</pre></details></div></div>
       <div class="links"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3955553">SSRN</a></div>
     </div>
     <div class="paper">
-      <div class="icon"></div>
       <div class="yr">2022</div>
-      <div><h3><a href="https://onlinelibrary.wiley.com/doi/full/10.1002/jaa2.36">The Effects of the Affordable Care Act on Seasonal Agricultural Workers</a></h3><p>with Jeffrey Perloff · Journal of the Agricultural and Applied Economics Association</p></div>
+      <div><h3><a href="https://onlinelibrary.wiley.com/doi/full/10.1002/jaa2.36">The Effects of the Affordable Care Act on Seasonal Agricultural Workers</a></h3><p>with Jeffrey Perloff · Journal of the Agricultural and Applied Economics Association</p><div class="disc"><details class="abs"><summary>Abstract</summary><p class="body">This study investigates the effects of the Affordable Care Act (ACA) policies (Medicaid expansion, health insurance premium subsidy, and tax penalty) on farmworkers&rsquo; health insurance coverage and healthcare utilization. Using the National Agricultural Worker Survey, we find that the ACA policies substantially raised the share of seasonal farmworkers with medical insurance. It significantly increased workers&rsquo; use of preventive medical services and decreased the use of hospitals, including emergency rooms, which was a goal of the law&rsquo;s proponents. These effects did not significantly differ between workers with and without a pre-existing medical condition.</p></details><details class="abs"><summary>BibTeX</summary><pre class="bib">@article{donkor2022aca,
+  author  = {Donkor, Kwabena and Perloff, Jeffrey},
+  title   = {The Effects of the Affordable Care Act on Seasonal Agricultural Workers},
+  journal = {Journal of the Agricultural and Applied Economics Association},
+  year    = {2022},
+  doi     = {10.1002/jaa2.36}
+}</pre></details></div></div>
       <div class="links"><a href="https://onlinelibrary.wiley.com/doi/full/10.1002/jaa2.36">Journal</a></div>
     </div>
   </section>
 
-  <section class="papers" id="media">
-    <h2 class="h">Media</h2>
-    <div class="paper">
-      <div class="yr">2023</div>
-      <div><h3><a href="https://abcnews.go.com/Lifestyle/video/tipping-confusing-now-97106835">Tipping: Confusing Now</a></h3><p>ABC News</p></div>
-    </div>
-    <div class="paper">
-      <div class="yr">2022</div>
-      <div><h3><a href="https://www.forbes.com/sites/shaharziv/2022/05/31/these-3-factors-could-get-you-to-tip-more/">These 3 Factors Could Get You to Tip More</a></h3><p>Forbes</p></div>
-    </div>
-    <div class="paper">
-      <div class="yr">2022</div>
-      <div><h3><a href="https://www.wsj.com/articles/menu-of-tipping-options-people-tip-more-11653067512">Menu of Tipping Options: People Tip More</a></h3><p>The Wall Street Journal</p></div>
-    </div>
-    <div class="paper">
-      <div class="yr">2022</div>
-      <div><h3><a href="https://www.wsj.com/articles/covid-inflation-tipping-11647881902">COVID, Inflation, and Tipping</a></h3><p>The Wall Street Journal</p></div>
-    </div>
-    <div class="paper">
-      <div class="yr">2022</div>
-      <div><h3><a href="https://marginalrevolution.com/marginalrevolution/2022/01/tuesday-assorted-links-349.html">Tuesday Assorted Links</a></h3><p>Marginal Revolution</p></div>
-    </div>
-    <div class="paper">
-      <div class="yr">2022</div>
-      <div><h3><a href="https://petergreenberg.com/2022/02/26/eye-on-travel-chicago-february-26-2022/">Eye on Travel, Chicago</a></h3><p>Peter Greenberg</p></div>
-    </div>
-    <div class="paper">
-      <div class="yr">2022</div>
-      <div><h3><a href="https://t.co/jOBuUAClWY">Interview</a></h3><p>FOX 2 KTVU</p></div>
-    </div>
-    <div class="paper">
-      <div class="yr">2022</div>
-      <div><h3><a href="https://siepr.stanford.edu/kwabena-donkor-faculty-fellow">Why Econ? Series</a></h3><p>SIEPR</p></div>
-    </div>
-    <div class="paper">
-      <div class="yr">2021</div>
-      <div><h3><a href="https://www.gsb.stanford.edu/insights/tipping-point-subtle-psychology-economics-taxi-fares">Tipping Point: The Subtle Psychology and Economics of Taxi Fares</a></h3><p>Stanford GSB Insights</p></div>
-    </div>
-  </section>
 
   <section class="contact" id="contact">
     <div>
@@ -262,7 +254,6 @@
   document.getElementById('year').textContent = new Date().getFullYear();
 
   var grid=document.getElementById('grid'), DAYS=7, HOURS=24, cells=[];
-  // illustrative rhythm: weekday commute peaks, weekend late nights
   function val(d,h){
     var weekend = d>=5, v=.10;
     if(!weekend){ if(h>=7&&h<=9) v=.92; else if(h>=17&&h<=19) v=.98;
@@ -276,25 +267,15 @@
     var c=document.createElement('div'); c.className='cell';
     c.dataset.v=val(d,h).toFixed(3); grid.appendChild(c); cells.push(c);
   }
-  var hue='medallion';
   function paint(instant){
-    var rgb = hue==='medallion' ? '242,176,30' : '111,180,71';
+    var rgb='242,176,30';
     cells.forEach(function(c,i){
       var v=parseFloat(c.dataset.v), a=(0.08+v*0.92).toFixed(3);
       var go=function(){ c.style.background='rgba('+rgb+','+a+')'; };
       instant ? go() : setTimeout(go, i*3);
     });
   }
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  paint(reduce);
-  var swap=document.getElementById('swap');
-  swap.addEventListener('click',function(){
-    hue = hue==='medallion' ? 'boro' : 'medallion';
-    document.getElementById('dot').style.background = hue==='medallion' ? '#F2B01E' : '#6FB447';
-    document.getElementById('swaplabel').textContent = hue==='medallion' ? 'Yellow medallion' : 'Boro green';
-    swap.setAttribute('aria-pressed', hue==='boro');
-    paint(true);
-  });
+  paint(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 })();
 </script>
 </body>
